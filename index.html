@@ -2,83 +2,62 @@
 <script src="https://cdn.jsdelivr.net/gh/netizenorg/netnet-standard-library/build/nn.min.js"></script>
 <style>
   body {
-    background-color: #22162B;
-    color: #F3C98B;
-    font-size: 30px;
-    line-height: 30px;
-    font-weight: 500;
-    word-wrap: anywhere;
-    font-family: "Noto Serif SC";
-    transition: all 2s;
+    background-color: #90EE90;
   }
 </style>
 <body></body>
 <script>
 /* global nn */
-// 🥅
+                                            let px = nn.width / 2;
+                                            let py = nn.height / 2;
+                                            let football;
+                                            let goalpost
+                                            let i = 0
+  function create_goalpost () {
+    i ++
+    if (goalpost){
+      goalpost.remove()
+    }
+    goalpost = nn.create('span')
+    .content('🥅')
+    .css({
+      position: 'absolute',
+      fontSize: 40 + 10 * i,
+      cursor: 'pointer',
+      left: px - 10 * i,
+      top: py - 10 * i
+    })
+    .addTo('body')
+  }
   
-  // let i = 0;
-  
-  function create_football () {
-    const football = nn.create('span')
+  function create_football (x,y) {
+    if (football){
+      football.remove()
+    }
+    football = nn.create('span')
     .content('⚽')
     .css({
       position: 'absolute',
-      fontSize: 40,
+      fontSize: 50 - 4 * i,
       cursor: 'pointer',
-      left: nn.width/2,
-      top: nn.height/2
+      left: x,
+      top: y
     })
     .addTo('body')
-    .on('click', () => football.remove())
   }
-  
-  create_football()
-  
-//   function animate () {
-//     requestAnimationFrame(animate);
-//     let rand = Math.round(Math.random() * 100);
-//     if (rand % 9 === 1) {
-//       document.body.innerText += '╔';
-//     }
-//     else if (rand % 9 === 2) {
-//       document.body.innerText += '╗';
-//     }
-//     else if (rand % 9 === 3) {
-//       document.body.innerText += '╚';
-//     }
-//     else if (rand % 9 === 4) {
-//       document.body.innerText += '╝';
-//     }
-//     else if (rand % 9 === 5) {
-//       document.body.innerText += '╠';
-//     }
-//     else if (rand % 9 === 6) {
-//       document.body.innerText += '╣';
-//     }
-//     else if (rand % 9 === 7) {
-//       document.body.innerText += '╦';
-//     }
-//     else if (rand % 9 === 8) {
-//       document.body.innerText += '╩';
-//     }
-//     else {
-//       document.body.innerText += '╬';
-//     }
-    
-//     if (i % 1000 === 0) {
-//       if (document.body.style.transform === "scale(0.5) translate(0%, 100%)") {
-//         document.body.style.transform = "scale(2)";
-//       }
-//       else {
-//         document.body.style.transform = "scale(0.5) translate(0%, 100%)";
-//       }
-//     }
-    
-//     window.scrollTo(0, document.body.offsetHeight);
-//     i++;
-//   }
 
-//   animate();
+function scatterBall () {
+    const x = nn.random(0, nn.width);
+    const y = nn.random(0, nn.height);
+    create_football(x, y);
+}
+
+                                        create_goalpost()
+                                        create_football(px, py+100)
+                                        nn.on('click', () => {
+                                          scatterBall();
+                                          create_goalpost();
+                                        });
+
 
 </script>
